@@ -1,0 +1,248 @@
+﻿Poll ID;Poll Type;Poll Question;Description;Poll Option;Count;Total Votes;Results;Survey Name
+25981866;Survey;Nom du cabinet de votre expert comptable;;FIDSUD CDBA;1;8;;Hosmony-client
+25981866;Survey;Nom du cabinet de votre expert comptable;;C mon expert;2;8;;Hosmony-client
+25981866;Survey;Nom du cabinet de votre expert comptable;;Cimon expert;1;8;;Hosmony-client
+25981866;Survey;Nom du cabinet de votre expert comptable;;Cmonexpert ;4;8;;Hosmony-client
+25981867;Survey;N°Siret;;342 626 918 00045;1;8;;Hosmony-client
+25981867;Survey;N°Siret;;401242805;6;8;;Hosmony-client
+25981867;Survey;N°Siret;;401202845;1;8;;Hosmony-client
+25981868;Survey;1/ Dans quel pays résidez-vous ?;;France;8;8;;Hosmony-client
+25981868;Survey;1/ Dans quel pays résidez-vous ?;;Autre;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Occitanie;8;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;PACA;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Nouvelle Aquitaine;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Auvergne Rhône-Alpes;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Bourgogne Franche-Comté;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Centre-Val de Loire;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Pays de la Loire;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Bretagne;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Normandie;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Ile-de-France;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Grand Est;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Haut-de-France;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Corse;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;DROM;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Régions limitrophes ou frontalières;0;8;;Hosmony-client
+25981869;Survey;2/ Dans quelle région résidez-vous ?;;Autre;0;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Narbonne;1;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Toulouges;1;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Saint Feliu d'Amont;1;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Alénya;2;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Perpignan;1;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Le Soler ;1;8;;Hosmony-client
+25981870;Survey;3/ Dans quelle ville résidez-vous ?;;Saleilles;1;8;;Hosmony-client
+25981871;Survey;4/ A quelle tranche d'âge appartenez-vous ?;;18 - 24 ans;1;8;;Hosmony-client
+25981871;Survey;4/ A quelle tranche d'âge appartenez-vous ?;;25 - 34 ans;3;8;;Hosmony-client
+25981871;Survey;4/ A quelle tranche d'âge appartenez-vous ?;;35 - 49 ans;2;8;;Hosmony-client
+25981871;Survey;4/ A quelle tranche d'âge appartenez-vous ?;;50 - 64 ans;2;8;;Hosmony-client
+25981871;Survey;4/ A quelle tranche d'âge appartenez-vous ?;;65 ans et plus;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Agriculteur;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Artisans - Commerçants - Chefs d'entreprise - Entrepreneurs;2;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Cadres et professions intellectuelles supérieurs;3;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Professions intermédiaires;1;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Employé;2;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Ouvrier;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Retraité;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;En recherche d'emploi;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Étudiant;0;8;;Hosmony-client
+25981872;Survey;5/ A quelle catégorie socio-professionnelle appartenez-vous ?;;Autre;0;8;;Hosmony-client
+25981873;Survey;6/ Êtes-vous ?;;Une femme;1;8;;Hosmony-client
+25981873;Survey;6/ Êtes-vous ?;;Un homme;7;8;;Hosmony-client
+25981873;Survey;6/ Êtes-vous ?;;Autre;0;8;;Hosmony-client
+25981874;Survey;7/ Connaissez-vous la notion de développement durable ?;;Oui;8;8;;Hosmony-client
+25981874;Survey;7/ Connaissez-vous la notion de développement durable ?;;Non;0;8;;Hosmony-client
+25981875;Survey;8/ Classer les 3 piliers du développement durable du plus important au moins important selon vous, de 1 à 3 :;"Voici la définition officielle (Rapport Brundtland, 1987) : ""Le développement durable est un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs.""";La dimension économique;8;8;;Hosmony-client
+25981875;Survey;8/ Classer les 3 piliers du développement durable du plus important au moins important selon vous, de 1 à 3 :;"Voici la définition officielle (Rapport Brundtland, 1987) : ""Le développement durable est un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs.""";La dimension sociale;8;8;;Hosmony-client
+25981875;Survey;8/ Classer les 3 piliers du développement durable du plus important au moins important selon vous, de 1 à 3 :;"Voici la définition officielle (Rapport Brundtland, 1987) : ""Le développement durable est un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs.""";La dimension environnementale;8;8;;Hosmony-client
+25981876;Survey;9/ Êtes-vous sensible aux actions environnementales et/ou sociales (des entreprises, de l'État, des collectivités...) ?;;Sensible;3;8;;Hosmony-client
+25981876;Survey;9/ Êtes-vous sensible aux actions environnementales et/ou sociales (des entreprises, de l'État, des collectivités...) ?;;Plutôt sensible;5;8;;Hosmony-client
+25981876;Survey;9/ Êtes-vous sensible aux actions environnementales et/ou sociales (des entreprises, de l'État, des collectivités...) ?;;Plutôt pas sensible;0;8;;Hosmony-client
+25981876;Survey;9/ Êtes-vous sensible aux actions environnementales et/ou sociales (des entreprises, de l'État, des collectivités...) ?;;Pas du tout sensible;0;8;;Hosmony-client
+25981877;Rating (1-4);"10.1/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre le réchauffement climatique :";;3;3;8;3.6;Hosmony-client
+25981877;Rating (1-4);"10.1/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre le réchauffement climatique :";;4;5;8;3.6;Hosmony-client
+25981878;Rating (1-4);"10.2/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Réduire les inégalités :";;2;3;8;3.1;Hosmony-client
+25981878;Rating (1-4);"10.2/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Réduire les inégalités :";;3;1;8;3.1;Hosmony-client
+25981878;Rating (1-4);"10.2/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Réduire les inégalités :";;4;4;8;3.1;Hosmony-client
+25981879;Rating (1-4);"10.3/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Garantir l'accès à la santé et à une alimentation de qualité pour tous :";;1;1;8;3;Hosmony-client
+25981879;Rating (1-4);"10.3/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Garantir l'accès à la santé et à une alimentation de qualité pour tous :";;2;2;8;3;Hosmony-client
+25981879;Rating (1-4);"10.3/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Garantir l'accès à la santé et à une alimentation de qualité pour tous :";;3;1;8;3;Hosmony-client
+25981879;Rating (1-4);"10.3/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Garantir l'accès à la santé et à une alimentation de qualité pour tous :";;4;4;8;3;Hosmony-client
+25981880;Rating (1-4);"10.4/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Accélérer la transition énergétique :";;2;1;8;3.2;Hosmony-client
+25981880;Rating (1-4);"10.4/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Accélérer la transition énergétique :";;3;4;8;3.2;Hosmony-client
+25981880;Rating (1-4);"10.4/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Accélérer la transition énergétique :";;4;3;8;3.2;Hosmony-client
+25981881;Rating (1-4);"10.5/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Réduire le gaspillage et la production de déchets :";;3;5;8;3.4;Hosmony-client
+25981881;Rating (1-4);"10.5/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Réduire le gaspillage et la production de déchets :";;4;3;8;3.4;Hosmony-client
+25981882;Rating (1-4);"10.6/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Protéger la biodiversité aquatique et terrestre :";;2;1;8;3.4;Hosmony-client
+25981882;Rating (1-4);"10.6/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Protéger la biodiversité aquatique et terrestre :";;3;3;8;3.4;Hosmony-client
+25981882;Rating (1-4);"10.6/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Protéger la biodiversité aquatique et terrestre :";;4;4;8;3.4;Hosmony-client
+25981883;Rating (1-4);"10.7/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre les discriminations :";;1;1;8;2.9;Hosmony-client
+25981883;Rating (1-4);"10.7/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre les discriminations :";;2;2;8;2.9;Hosmony-client
+25981883;Rating (1-4);"10.7/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre les discriminations :";;3;2;8;2.9;Hosmony-client
+25981883;Rating (1-4);"10.7/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Lutter contre les discriminations :";;4;3;8;2.9;Hosmony-client
+25981884;Rating (1-4);"10.8/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Favoriser l'économie et les emplois locaux :";;2;1;8;3.2;Hosmony-client
+25981884;Rating (1-4);"10.8/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Favoriser l'économie et les emplois locaux :";;3;4;8;3.2;Hosmony-client
+25981884;Rating (1-4);"10.8/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉 Favoriser l'économie et les emplois locaux :";;4;3;8;3.2;Hosmony-client
+25981885;Rating (1-4);"10.9/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉  Mettre en place des systèmes de gouvernance plus justes et plus inclusifs :";;2;4;8;2.5;Hosmony-client
+25981885;Rating (1-4);"10.9/ Selon vous, dans votre région, quels sont les enjeux les plus importants parmi ceux liés au développement durable (4 étoiles signifiant très important) ?
+
+👉  Mettre en place des systèmes de gouvernance plus justes et plus inclusifs :";;3;4;8;2.5;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les citoyens;7;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";L'État;4;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les collectivités territoriales;5;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les organisations internationales (Europe, ONU, etc);1;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les entreprises/industries;5;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les associations/ONG;1;8;;Hosmony-client
+25981886;Survey;11/ Dans votre région, qui a le plus de pouvoirs pour agir en faveur du développement durable ?;"NB : Le terme ""région"" renvoie à votre région administrative de résidence (Ile-de-France, Occitanie...)";Les universités et centres de recherche;0;8;;Hosmony-client
+25981887;Survey;12/ Actuellement, les mesures prises par ces organisations sont-elles en cohérence avec vos attentes ?;;Cohérentes;0;8;;Hosmony-client
+25981887;Survey;12/ Actuellement, les mesures prises par ces organisations sont-elles en cohérence avec vos attentes ?;;Plutôt cohérentes;3;8;;Hosmony-client
+25981887;Survey;12/ Actuellement, les mesures prises par ces organisations sont-elles en cohérence avec vos attentes ?;;Plutôt pas cohérentes;4;8;;Hosmony-client
+25981887;Survey;12/ Actuellement, les mesures prises par ces organisations sont-elles en cohérence avec vos attentes ?;;Pas du tout cohérentes;0;8;;Hosmony-client
+25981887;Survey;12/ Actuellement, les mesures prises par ces organisations sont-elles en cohérence avec vos attentes ?;;Je ne suis pas assez informé;1;8;;Hosmony-client
+25981888;Rating (1-4);"13.1/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Qualité et prix du produit :";;1;1;8;3.1;Hosmony-client
+25981888;Rating (1-4);"13.1/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Qualité et prix du produit :";;3;4;8;3.1;Hosmony-client
+25981888;Rating (1-4);"13.1/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Qualité et prix du produit :";;4;3;8;3.1;Hosmony-client
+25981889;Rating (1-4);"13.2/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Bénéfice économique pour le territoire :";;1;1;8;3;Hosmony-client
+25981889;Rating (1-4);"13.2/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Bénéfice économique pour le territoire :";;3;5;8;3;Hosmony-client
+25981889;Rating (1-4);"13.2/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Bénéfice économique pour le territoire :";;4;2;8;3;Hosmony-client
+25981890;Rating (1-4);"13.3/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Respect des droits humains et des salariés :";;2;2;8;3.4;Hosmony-client
+25981890;Rating (1-4);"13.3/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Respect des droits humains et des salariés :";;3;1;8;3.4;Hosmony-client
+25981890;Rating (1-4);"13.3/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Respect des droits humains et des salariés :";;4;5;8;3.4;Hosmony-client
+25981891;Rating (1-4);"13.4/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Impact écologique du produit :";;3;6;8;3.2;Hosmony-client
+25981891;Rating (1-4);"13.4/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Impact écologique du produit :";;4;2;8;3.2;Hosmony-client
+25981892;Rating (1-4);"13.5/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Structure juridique de l'organisation :";Société commerciale, coopérative, entreprise à mission avec une raison d'être, association...;1;1;8;2.1;Hosmony-client
+25981892;Rating (1-4);"13.5/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Structure juridique de l'organisation :";Société commerciale, coopérative, entreprise à mission avec une raison d'être, association...;2;5;8;2.1;Hosmony-client
+25981892;Rating (1-4);"13.5/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Structure juridique de l'organisation :";Société commerciale, coopérative, entreprise à mission avec une raison d'être, association...;3;2;8;2.1;Hosmony-client
+25981893;Rating (1-4);"13.6/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Actions philanthropiques réalisées :";Mécénat, bénévolat d'entreprise, compensation...;1;1;8;2.5;Hosmony-client
+25981893;Rating (1-4);"13.6/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Actions philanthropiques réalisées :";Mécénat, bénévolat d'entreprise, compensation...;2;3;8;2.5;Hosmony-client
+25981893;Rating (1-4);"13.6/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Actions philanthropiques réalisées :";Mécénat, bénévolat d'entreprise, compensation...;3;3;8;2.5;Hosmony-client
+25981893;Rating (1-4);"13.6/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Actions philanthropiques réalisées :";Mécénat, bénévolat d'entreprise, compensation...;4;1;8;2.5;Hosmony-client
+25981894;Rating (1-4);"13.7/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Valeurs, éthique et transparence de l'organisation :";;2;1;8;3.2;Hosmony-client
+25981894;Rating (1-4);"13.7/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Valeurs, éthique et transparence de l'organisation :";;3;4;8;3.2;Hosmony-client
+25981894;Rating (1-4);"13.7/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Valeurs, éthique et transparence de l'organisation :";;4;3;8;3.2;Hosmony-client
+25981895;Rating (1-4);"13.8/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Création de lien social autour de l'identité :";Communauté de partage, solidarité,...;2;4;8;2.5;Hosmony-client
+25981895;Rating (1-4);"13.8/ Concernant les entreprises : quels paramètres sont les plus importants pour vous et pourraient impacter vos choix en tant que consommateur (4 étoiles signifiant très important) ?
+
+👉 Création de lien social autour de l'identité :";Communauté de partage, solidarité,...;3;4;8;2.5;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;La gouvernance de l'organisation (qui prend les décisions et comment);1;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;Le respect des droits de l'homme;3;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;Les relations et conditions de travail des salariés;3;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;L'impact des activités sur l'environnement;7;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;La lutte contra la corruption et la concurrence déloyale;3;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;La responsabilité envers le consommateur (information, sécurité, respect de la vie privée...);6;8;;Hosmony-client
+25981896;Survey;14/ Parmi les 7 axes ci-dessous, quelles problématiques devraient selon vous être traitées en priorité par les organisations de votre région ?;;Les responsabilité envers les communautés et le développement local;1;8;;Hosmony-client
+25981897;Survey;15/ Connaissez-vous au moins un label de développement durable ?;;Oui;6;8;;Hosmony-client
+25981897;Survey;15/ Connaissez-vous au moins un label de développement durable ?;;Non;2;8;;Hosmony-client
+25981898;Rating (1-4);16/ Si oui, sur une échelle de 1 à 4, quel degré de confiance accordez-vous aux labels de développement durable ? (4 étoiles étant le niveau de confiance maximum).;;2;2;7;2.9;Hosmony-client
+25981898;Rating (1-4);16/ Si oui, sur une échelle de 1 à 4, quel degré de confiance accordez-vous aux labels de développement durable ? (4 étoiles étant le niveau de confiance maximum).;;3;4;7;2.9;Hosmony-client
+25981898;Rating (1-4);16/ Si oui, sur une échelle de 1 à 4, quel degré de confiance accordez-vous aux labels de développement durable ? (4 étoiles étant le niveau de confiance maximum).;;4;1;7;2.9;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Les attentes et les avis des citoyens;4;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Les enjeux des différents secteurs d'activité;3;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Les particularités de chaque territoire;4;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Un cahier des charges clair, explicite et transparent;3;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Des normes réglementées, comme l'ISO 26 000 de l'AFNOR;1;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Une analyse poussée des données de l'organisation;0;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Un parcours d'accompagnement de l'organisation à la démarche RSE (Responsabilité Sociétales des Entreprises);7;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;La mise en valeur des entreprises locales et de l'économie circulaire;2;8;;Hosmony-client
+25981899;Survey;17/ Si on vous proposait un label territorial qui certifie les bonnes pratiques des organisations en termes de développement durable, il faudrait impérativement qu'il s'appuie sur :;;Autre;0;8;;Hosmony-client
+25981900;Survey;18/ Est-ce qu'un complément de prix raisonnable et justifié sur les produits certifiés vous paraîtrait acceptable ?;;Oui;6;8;;Hosmony-client
+25981900;Survey;18/ Est-ce qu'un complément de prix raisonnable et justifié sur les produits certifiés vous paraîtrait acceptable ?;;Non;2;8;;Hosmony-client
+25981901;Survey;"19/ C'est presque terminé !
+
+Souhaitez-vous recevoir les résultats de ce questionnaire sur votre adresse email ?";;Oui, envoyez moi les résultats par email;8;8;;Hosmony-client
+25981901;Survey;"19/ C'est presque terminé !
+
+Souhaitez-vous recevoir les résultats de ce questionnaire sur votre adresse email ?";;Non merci;0;8;;Hosmony-client
