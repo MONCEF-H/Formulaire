@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 // Embedded and pre-processed questionnaire data from your CSV
 const questionsData = [
-  // NEW: Virtual questions for Full Name and Email at the top,
-  // in the order they appear in your image (Nom complet first, then Email)
+  // NEW: Virtual questions with numeric IDs and reordered for display
   {
-    "id": "full_name_input",
+    "id": "10000000", // New numeric ID for Email
     "type": "Survey",
-    "question": "Nom complet",
+    "question": "Adresse électronique",
     "description": "",
     "options": []
   },
   {
-    "id": "email_input",
+    "id": "10000001", // New numeric ID for Full Name
     "type": "Survey",
-    "question": "Adresse électronique",
+    "question": "Nom complet",
     "description": "",
     "options": []
   },
@@ -605,6 +604,47 @@ const appStyles = `
     border: 1px solid #f5c6cb;
   }
 
+  /* Styles for the Thank You page */
+  .thank-you-page {
+    text-align: center;
+    padding: 50px;
+    background-color: #f0f2f5;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+  }
+
+  .thank-you-page h2 {
+    color: #28a745; /* Green for success */
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+
+  .thank-you-page p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .thank-you-page button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .thank-you-page button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .container {
@@ -624,6 +664,13 @@ const appStyles = `
       padding: 12px 20px;
       font-size: 1em;
     }
+
+    .thank-you-page {
+      padding: 30px;
+    }
+    .thank-you-page h2 {
+      font-size: 2em;
+    }
   }
 
   @media (max-width: 480px) {
@@ -633,6 +680,12 @@ const appStyles = `
 
     h1 {
       font-size: 1.5em;
+    }
+    .thank-you-page h2 {
+      font-size: 1.8em;
+    }
+    .thank-you-page p {
+      font-size: 1em;
     }
   }
 `;
@@ -731,9 +784,15 @@ const App = () => {
   const [submissionMessage, setSubmissionMessage] = useState(null);
   // State to hold specific error messages for individual checkbox questions
   const [checkboxErrors, setCheckboxErrors] = useState({});
-  // NEW: State for email input error
+  // State for email input error
   const [emailError, setEmailError] = useState(null);
+  // NOUVEAUTÉ : État pour gérer la page de confirmation de soumission
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
+
+  // Define the numeric IDs for the top inputs for easy reference
+  const EMAIL_INPUT_ID = "10000000";
+  const FULL_NAME_INPUT_ID = "10000001";
 
   // List of question IDs that should show the "Autre" input field when "Autre" is selected.
   // ONLY for Q1 (21398883), Q2 (21398884), Q5 (21398887)
@@ -747,7 +806,7 @@ const App = () => {
   // Function to handle changes in form inputs.
   const handleChange = (questionId, value, isOtherText = false) => {
     // Specific validation for email_input
-    if (questionId === "email_input") {
+    if (questionId === EMAIL_INPUT_ID) {
       setAnswers(prevAnswers => ({
         ...prevAnswers,
         [questionId]: value
@@ -856,6 +915,23 @@ const App = () => {
     });
   };
 
+  // NOUVEAUTÉ : Composant simple pour la page de remerciement
+  const SubmissionSuccessPage = () => {
+    return (
+      <div className="thank-you-page">
+        <h2>Merci pour votre soumission !</h2>
+        <p>Votre questionnaire a été envoyé avec succès.</p>
+        <p>Nous apprécions votre contribution.</p>
+        <button onClick={() => {
+          setIsSubmitted(false); // Réinitialise l'état pour afficher le formulaire à nouveau
+          setAnswers({}); // Vide le formulaire
+          setSubmissionMessage(null); // Efface le message de soumission
+        }}>Remplir un nouveau questionnaire</button>
+      </div>
+    );
+  };
+
+
   // Function to handle form submission.
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default browser form submission
@@ -865,29 +941,43 @@ const App = () => {
     const dataToSend = {};
     let allRequiredFieldsFilled = true; // Flag to track overall form validity
 
-    // --- Validate top inputs (Nom complet, Email) ---
-    if (!answers.full_name_input || answers.full_name_input.trim() === '') {
-        allRequiredFieldsFilled = false;
-        setSubmissionMessage("Veuillez entrer votre nom complet.");
-    }
-    // Perform email validation here as well, in case user didn't type and just submitted
-    else if (!answers.email_input || answers.email_input.trim() === '') {
+    // --- Validate and add top inputs (Email, Nom complet) explicitly ---
+    // Find the question definitions for these top inputs using their new numeric IDs
+    const emailQuestion = questionsData.find(q => q.id === EMAIL_INPUT_ID);
+    const fullNameQuestion = questionsData.find(q => q.id === FULL_NAME_INPUT_ID);
+
+
+    // Validate Email First
+    if (!answers[EMAIL_INPUT_ID] || answers[EMAIL_INPUT_ID].trim() === '') {
         allRequiredFieldsFilled = false;
         setSubmissionMessage("Veuillez entrer votre adresse électronique.");
-    } else if (!/\S+@\S+\.\S+/.test(answers.email_input)) { // Basic email format validation
+        return;
+    } else if (!/\S+@\S+\.\S+/.test(answers[EMAIL_INPUT_ID])) { // Basic email format validation
         allRequiredFieldsFilled = false;
         setSubmissionMessage("Veuillez entrer une adresse électronique valide.");
+        return;
+    } else {
+        // Explicitly add email and its text to dataToSend
+        dataToSend[emailQuestion.id] = answers[EMAIL_INPUT_ID];
+        dataToSend[`${emailQuestion.id}_text`] = emailQuestion.question;
     }
 
-    if (!allRequiredFieldsFilled) {
-        return; // Stop submission if initial fields are invalid
+    // Validate Full Name Second
+    if (!answers[FULL_NAME_INPUT_ID] || answers[FULL_NAME_INPUT_ID].trim() === '') {
+        allRequiredFieldsFilled = false;
+        setSubmissionMessage("Veuillez entrer votre nom complet.");
+        return;
+    } else {
+        // Explicitly add full name and its text to dataToSend
+        dataToSend[fullNameQuestion.id] = answers[FULL_NAME_INPUT_ID];
+        dataToSend[`${fullNameQuestion.id}_text`] = fullNameQuestion.question;
     }
 
 
-    // --- Validate other questions ---
+    // --- Validate and add other questions ---
     for (const question of questionsData) {
-        // Skip validation for virtual questions already handled
-        if (question.id === "full_name_input" || question.id === "email_input") {
+        // Skip validation/addition for virtual questions already handled above
+        if (question.id === EMAIL_INPUT_ID || question.id === FULL_NAME_INPUT_ID) {
             continue;
         }
 
@@ -935,6 +1025,7 @@ const App = () => {
 
         // Prepare data for sending (only include answered questions)
         // This part runs ONLY if allRequiredFieldsFilled is still true up to this point
+        // And it only adds fields that were NOT the top inputs (full_name_input, email_input)
         if (answerValue !== undefined && answerValue !== null && answerValue !== '') {
             // For ranking (Q8) or questions with "Autre" text input
             if (question.id === "21398890" || (typeof answerValue === 'object' && questionsWithOtherTextInput.includes(question.id))) {
@@ -947,8 +1038,11 @@ const App = () => {
         }
     }
 
+    // This block should only be reached if some required fields within the main loop were missed
+    // after the top inputs were successfully validated.
     if (!allRequiredFieldsFilled) {
-        // If no specific message was set by top input validation, set a general message
+        // This general message will only display if a specific error message wasn't already set
+        // by the validation of the top input fields (nom complet / email)
         if (!submissionMessage) {
             setSubmissionMessage("Veuillez remplir toutes les questions requises pour soumettre le questionnaire.");
         }
@@ -966,15 +1060,21 @@ const App = () => {
         body: JSON.stringify(dataToSend),
       });
 
-      const result = await response.json();
+      const result = await response.json(); // Toujours essayer de parser la réponse JSON
 
       if (response.ok) {
         console.log('Success:', result);
         setSubmissionMessage('Questionnaire soumis avec succès !');
-        setAnswers({}); // Optional: clear the form after successful submission
+        setIsSubmitted(true); // NOUVEAUTÉ : Afficher la page de confirmation
+        // setAnswers({}); // Non nécessaire car on passe à une autre vue
       } else {
         console.error('Submission Error:', result);
-        setSubmissionMessage(`Échec de la soumission : ${result.message || 'Erreur inconnue'}`);
+        // NOUVEAUTÉ : Vérifier si l'erreur vient d'un doublon d'e-mail (statut 409)
+        if (response.status === 409) {
+          setSubmissionMessage(result.message || 'Cette adresse électronique a déjà soumis le questionnaire.');
+        } else {
+          setSubmissionMessage(`Échec de la soumission : ${result.message || 'Erreur inconnue'}`);
+        }
       }
 
     } catch (error) {
@@ -986,198 +1086,203 @@ const App = () => {
   return (
     <>
       <style>{appStyles}</style>
-      <div className="container">
-        {/* TOP SECTION: Title, Welcome Message, Session ID */}
-        <h1 className="form-title-icon">
-            Sondage sur le Développement Durable
-        </h1>
-        <p className="subtitle">
-          Veuillez remplir ce sondage.
-        </p>
-        <hr style={{ margin: '20px 0', borderColor: '#eee' }} /> {/* Separator */}
+      {/* NOUVEAUTÉ : Rendu conditionnel de la page de confirmation ou du formulaire */}
+      {isSubmitted ? (
+        <SubmissionSuccessPage />
+      ) : (
+        <div className="container">
+          {/* TOP SECTION: Title, Welcome Message, Session ID */}
+          <h1 className="form-title-icon">
+              Sondage sur le Développement Durable
+          </h1>
+          <p className="subtitle">
+            Veuillez remplir ce sondage.
+          </p>
+          <hr style={{ margin: '20px 0', borderColor: '#eee' }} /> {/* Separator */}
 
-        <form onSubmit={handleSubmit}>
-          {/* Render Nom complet input explicitly at the top */}
-          <div className="form-group">
-            <label htmlFor="full_name_input" className="fw-semibold">
-              Nom complet <span className="text-danger"> *</span>
-            </label>
-            <input
-              type="text"
-              id="full_name_input"
-              name="full_name_input"
-              placeholder="Entrez votre nom complet"
-              value={answers.full_name_input || ''}
-              onChange={(e) => handleChange("full_name_input", e.target.value)}
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            {/* Render Email input explicitly at the top with real-time validation feedback */}
+            <div className="form-group">
+              <label htmlFor={`question-${EMAIL_INPUT_ID}`} className="fw-semibold">
+                Adresse électronique <span className="text-danger"> *</span>
+              </label>
+              <input
+                type="email"
+                id={`question-${EMAIL_INPUT_ID}`}
+                name={`question-${EMAIL_INPUT_ID}`}
+                placeholder="votre.email@example.com"
+                value={answers[EMAIL_INPUT_ID] || ''}
+                onChange={(e) => handleChange(EMAIL_INPUT_ID, e.target.value)}
+                required
+              />
+              {emailError && (
+                <p className="inline-error-message">
+                  {emailError}
+                </p>
+              )}
+            </div>
 
-          {/* Render Email input explicitly at the top with real-time validation feedback */}
-          <div className="form-group">
-            <label htmlFor="email_input" className="fw-semibold">
-              Adresse électronique <span className="text-danger"> *</span>
-            </label>
-            <input
-              type="email"
-              id="email_input"
-              name="email_input"
-              placeholder="votre.email@example.com"
-              value={answers.email_input || ''}
-              onChange={(e) => handleChange("email_input", e.target.value)}
-              required
-            />
-            {emailError && (
-              <p className="inline-error-message">
-                {emailError}
-              </p>
-            )}
-          </div>
-
-
-          {questionsData.map(question => {
-            // Skip rendering if this question is one of the top inputs (already rendered explicitly)
-            if (question.id === "full_name_input" || question.id === "email_input") {
-                return null;
-            }
-
-            return (
-              <div key={question.id} className="form-group">
-                <label htmlFor={`question-${question.id}`} className="fw-semibold">
-                    {(() => {
-                      const lines = question.question.split('\n');
-                      return lines.map((line, i) => (
-                        <React.Fragment key={i}>
-                          {line}
-                          {i < lines.length - 1 && <br />}
-                        </React.Fragment>
-                      ));
-                    })()}
-                    {/* Add asterisk for required fields, except for Question 19 which is optional */}
-                    {question.id !== "21398916" && <span className="text-danger"> *</span>}
-                  </label>
-                {question.description && <p className="description">{question.description}</p>}
-
-                {/* Render different input types based on Poll Type and options */}
-                {question.type === "Survey" && question.options.length === 0 && (
-                  // Text input for open-ended survey questions (e.g., Nom du cabinet, N°Siret, Ville)
-                  <input
-                    type="text"
-                    id={`question-${question.id}`}
-                    name={`question-${question.id}`}
-                    value={answers[question.id] || ''}
-                    onChange={(e) => handleChange(question.id, e.target.value)}
-                    required
-                  />
-                )}
-
-                {/* Radio buttons for single-choice survey questions (most Survey types, excluding ranking and specific checkboxes) */}
-                {/* This now includes only Q6, Q7, Q9, Q12, Q15, Q18, Q19 */}
-                {question.type === "Survey" && question.options.length > 0 &&
-                 ![
-                   "21398890", // Exclude ranking Q8
-                   "21398901", // Exclude checkbox Q11
-                   "21398911", // Exclude checkbox Q14
-                   "21398914"  // Exclude checkbox Q17
-                 ].includes(question.id) && (
-                  <div className="radio-group">
-                    {question.options.map(option => (
-                      <div key={option} className="radio-option">
-                        <input
-                          type="radio"
-                          id={`question-${question.id}-${option.replace(/\s/g, '-')}`}
-                          name={`question-${question.id}`}
-                          value={option}
-                          checked={
-                            (typeof answers[question.id] === 'object' && answers[question.id]?.option === option) ||
-                            (typeof answers[question.id] === 'string' && answers[question.id] === option)
-                          }
-                          onChange={(e) => handleChange(question.id, e.target.value)}
-                          required={question.id !== "21398916"} // Q19 is optional
-                        />
-                        <label htmlFor={`question-${question.id}-${option.replace(/\s/g, '-')}`}>
-                          {option}
-                        </label>
-                      </div>
-                    ))}
-                    {/* Text input for "Autre" option, displayed ONLY for specific questions (Q1, Q2, Q5) and when "Autre" is selected */}
-                    {questionsWithOtherTextInput.includes(question.id) &&
-                     (typeof answers[question.id] === 'object' && answers[question.id]?.option === 'Autre') && (
-                      <div className="other-input-container">
-                        <input
-                          type="text"
-                          placeholder="Veuillez préciser"
-                          value={answers[question.id]?.otherText || ''}
-                          onChange={(e) => handleChange(question.id, e.target.value, true)} // Pass `true` for `isOtherText`
-                          required
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {question.type === "Survey" && question.id === "21398890" && (
-                  // Special handling for Question 8 (Ranking) with number inputs
-                  <RankingInput
-                    questionId={question.id}
-                    options={question.options}
-                    value={answers[question.id] || {}} // Ensure it's an object
-                    onChange={handleChange}
-                  />
-                )}
-
-                {/* Checkboxes for multiple selections (Question 11, 14, 17) */}
-                {question.type === "Survey" && question.options.length > 0 &&
-                 checkboxQuestionsWithMax3Limit.includes(question.id) && ( // Now includes all checkbox questions with max 3 limit
-                  <div className="checkbox-group">
-                    {question.options.map(option => (
-                      <div key={option} className="checkbox-option">
-                        <input
-                          type="checkbox"
-                          id={`question-${question.id}-${option.replace(/\s/g, '-')}`}
-                          name={`question-${question.id}`}
-                          value={option}
-                          checked={answers[question.id]?.includes(option) || false}
-                          onChange={(e) => handleCheckboxChange(question.id, option, e.target.checked)}
-                        />
-                        <label htmlFor={`question-${question.id}-${option.replace(/\s/g, '-')}`}>
-                          {option}
-                        </label>
-                      </div>
-                    ))}
-                    {/* Display local error message for max 3 limit if applicable */}
-                    {checkboxErrors[question.id] && (
-                      <p className="inline-error-message">
-                        {checkboxErrors[question.id]}
-                      </p>
-                    )}
-                  </div>
-                )}
+            {/* Render Nom complet input explicitly after email */}
+            <div className="form-group">
+              <label htmlFor={`question-${FULL_NAME_INPUT_ID}`} className="fw-semibold">
+                Nom complet <span className="text-danger"> *</span>
+              </label>
+              <input
+                type="text"
+                id={`question-${FULL_NAME_INPUT_ID}`}
+                name={`question-${FULL_NAME_INPUT_ID}`}
+                placeholder="Entrez votre nom complet"
+                value={answers[FULL_NAME_INPUT_ID] || ''}
+                onChange={(e) => handleChange(FULL_NAME_INPUT_ID, e.target.value)}
+                required
+              />
+            </div>
 
 
-                {question.type === "Rating (1-4)" && (
-                  // Star rating component for rating questions
-                  <div className="rating-group">
-                    <RatingInput
+            {questionsData.map(question => {
+              // Skip rendering if this question is one of the top inputs (already rendered explicitly)
+              if (question.id === EMAIL_INPUT_ID || question.id === FULL_NAME_INPUT_ID) {
+                  return null;
+              }
+
+              return (
+                <div key={question.id} className="form-group">
+                  <label htmlFor={`question-${question.id}`} className="fw-semibold">
+                      {(() => {
+                        const lines = question.question.split('\n');
+                        return lines.map((line, i) => (
+                          <React.Fragment key={i}>
+                            {line}
+                            {i < lines.length - 1 && <br />}
+                          </React.Fragment>
+                        ));
+                      })()}
+                      {/* Add asterisk for required fields, except for Question 19 which is optional */}
+                      {question.id !== "21398916" && <span className="text-danger"> *</span>}
+                    </label>
+                  {question.description && <p className="description">{question.description}</p>}
+
+                  {/* Render different input types based on Poll Type and options */}
+                  {question.type === "Survey" && question.options.length === 0 && (
+                    // Text input for open-ended survey questions (e.g., Nom du cabinet, N°Siret, Ville)
+                    <input
+                      type="text"
+                      id={`question-${question.id}`}
+                      name={`question-${question.id}`}
+                      value={answers[question.id] || ''}
+                      onChange={(e) => handleChange(question.id, e.target.value)}
+                      required
+                    />
+                  )}
+
+                  {/* Radio buttons for single-choice survey questions (most Survey types, excluding ranking and specific checkboxes) */}
+                  {/* This now includes only Q6, Q7, Q9, Q12, Q15, Q18, Q19 */}
+                  {question.type === "Survey" && question.options.length > 0 &&
+                   ![
+                     "21398890", // Exclude ranking Q8
+                     "21398901", // Exclude checkbox Q11
+                     "21398911", // Exclude checkbox Q14
+                     "21398914"  // Exclude checkbox Q17
+                   ].includes(question.id) && (
+                    <div className="radio-group">
+                      {question.options.map(option => (
+                        <div key={option} className="radio-option">
+                          <input
+                            type="radio"
+                            id={`question-${question.id}-${option.replace(/\s/g, '-')}`}
+                            name={`question-${question.id}`}
+                            value={option}
+                            checked={
+                              (typeof answers[question.id] === 'object' && answers[question.id]?.option === option) ||
+                              (typeof answers[question.id] === 'string' && answers[question.id] === option)
+                            }
+                            onChange={(e) => handleChange(question.id, e.target.value)}
+                            required={question.id !== "21398916"} // Q19 is optional
+                          />
+                          <label htmlFor={`question-${question.id}-${option.replace(/\s/g, '-')}`}>
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                      {/* Text input for "Autre" option, displayed ONLY for specific questions (Q1, Q2, Q5) and when "Autre" is selected */}
+                      {questionsWithOtherTextInput.includes(question.id) &&
+                       (typeof answers[question.id] === 'object' && answers[question.id]?.option === 'Autre') && (
+                        <div className="other-input-container">
+                          <input
+                            type="text"
+                            placeholder="Veuillez préciser"
+                            value={answers[question.id]?.otherText || ''}
+                            onChange={(e) => handleChange(question.id, e.target.value, true)} // Pass `true` for `isOtherText`
+                            required
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {question.type === "Survey" && question.id === "21398890" && (
+                    // Special handling for Question 8 (Ranking) with number inputs
+                    <RankingInput
                       questionId={question.id}
-                      value={answers[question.id] || 0}
+                      options={question.options}
+                      value={answers[question.id] || {}} // Ensure it's an object
                       onChange={handleChange}
                     />
-                  </div>
-                )}
+                  )}
+
+                  {/* Checkboxes for multiple selections (Question 11, 14, 17) */}
+                  {question.type === "Survey" && question.options.length > 0 &&
+                   checkboxQuestionsWithMax3Limit.includes(question.id) && ( // Now includes all checkbox questions with max 3 limit
+                    <div className="checkbox-group">
+                      {question.options.map(option => (
+                        <div key={option} className="checkbox-option">
+                          <input
+                            type="checkbox"
+                            id={`question-${question.id}-${option.replace(/\s/g, '-')}`}
+                            name={`question-${question.id}`}
+                            value={option}
+                            checked={answers[question.id]?.includes(option) || false}
+                            onChange={(e) => handleCheckboxChange(question.id, option, e.target.checked)}
+                          />
+                          <label htmlFor={`question-${question.id}-${option.replace(/\s/g, '-')}`}>
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                      {/* Display local error message for max 3 limit if applicable */}
+                      {checkboxErrors[question.id] && (
+                        <p className="inline-error-message">
+                          {checkboxErrors[question.id]}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+
+                  {question.type === "Rating (1-4)" && (
+                    // Star rating component for rating questions
+                    <div className="rating-group">
+                      <RatingInput
+                        questionId={question.id}
+                        value={answers[question.id] || 0}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <button type="submit">Soumettre le questionnaire</button>
+
+            {submissionMessage && (
+              <div className={`submission-message ${submissionMessage.includes('succès') ? 'success' : 'error'}`}>
+                {submissionMessage}
               </div>
-            );
-          })}
-
-          <button type="submit">Soumettre le questionnaire</button>
-
-          {submissionMessage && (
-            <div className={`submission-message ${submissionMessage.includes('succès') ? 'success' : 'error'}`}>
-              {submissionMessage}
-            </div>
-          )}
-        </form>
-      </div>
+            )}
+          </form>
+        </div>
+      )}
     </>
   );
 };
