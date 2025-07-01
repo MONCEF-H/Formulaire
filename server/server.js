@@ -36,14 +36,13 @@ mongoose.connect(MONGODB_URI, {
 // --- Mongoose Schemas and Models ---
 
 // 1. Schema for INDIVIDUAL Questionnaire Responses (from React frontend)
-// CE SCHÉMA INSÉRERA DÉSORMAIS LES DONNÉES DANS LA COLLECTION 'reponses'
 const individualResponseSchema = new mongoose.Schema({
     questionId: { type: String, required: true },
     questionText: { type: String, required: true },
     answer: { type: mongoose.Schema.Types.Mixed, required: true },
     timestamp: { type: Date, default: Date.now }
 }, {
-    collection: 'reponses' // <-- Collection 'reponses' dans la DB 'sondage' (via .env URI)
+    collection: 'reponses' // Collection 'reponses' dans la DB 'sondage'
 });
 
 const IndividualQuestionnaireResponse = mongoose.model('IndividualQuestionnaireResponse', individualResponseSchema);
@@ -78,17 +77,13 @@ app.post('/submit-questionnaire', async (req, res) => {
             return res.status(400).json({ message: 'No answers provided in the request body.' });
         }
 
-        // --- NOUVEAUTÉ : Vérification de l'e-mail en doublon ---
         const emailQuestionId = "10000000"; // L'ID que nous avons assigné à l'e-mail dans App.js
         const submittedEmail = answers[emailQuestionId];
 
-        // Validation préliminaire de l'e-mail avant la recherche en DB
         if (!submittedEmail || typeof submittedEmail !== 'string' || submittedEmail.trim() === '') {
             return res.status(400).json({ message: 'Adresse électronique requise ou non valide pour la soumission.' });
         }
 
-        // Vérifier si cette adresse e-mail existe déjà dans la collection 'reponses'
-        // On cherche un document où questionId est l'ID de l'e-mail ET où la réponse est l'e-mail soumis
         const existingEmailSubmission = await IndividualQuestionnaireResponse.findOne({
             questionId: emailQuestionId,
             answer: submittedEmail
@@ -96,30 +91,24 @@ app.post('/submit-questionnaire', async (req, res) => {
 
         if (existingEmailSubmission) {
             console.log(`Tentative de soumission en doublon pour l'e-mail : ${submittedEmail}`);
-            // Envoyer un statut 409 Conflict pour indiquer un doublon
             return res.status(409).json({ message: 'Cette adresse électronique a déjà soumis le questionnaire.' });
         }
-        // --- FIN NOUVEAUTÉ ---
-
 
         const responseDocuments = [];
-        // Itérer sur toutes les réponses pour construire les documents à insérer
         for (const questionIdKey in answers) {
-            // S'assurer que ce n'est pas une clé "_text" et que la réponse existe
             if (Object.hasOwnProperty.call(answers, questionIdKey) && !questionIdKey.endsWith('_text')) {
-                const questionText = answers[`${questionIdKey}_text`]; // Récupérer le texte de la question
-                const answerValue = answers[questionIdKey]; // Récupérer la valeur de la réponse
+                const questionText = answers[`${questionIdKey}_text`];
+                const answerValue = answers[questionIdKey];
 
-                // Ignorer si le texte de la question est manquant, bien qu'il devrait toujours être là
                 if (questionText === undefined) {
                     console.warn(`Missing questionText for questionId: ${questionIdKey}. Skipping this entry.`);
                     continue;
                 }
 
                 responseDocuments.push({
-                    questionId: questionIdKey, // Ceci sera l'ID propre (e.g., "21398887" ou "10000000")
-                    questionText: questionText, // Ceci sera la question réelle (e.g., "5/ A quelle catégorie..." ou "Adresse électronique")
-                    answer: answerValue // Ceci sera la réponse réelle de l'utilisateur
+                    questionId: questionIdKey,
+                    questionText: questionText,
+                    answer: answerValue
                 });
             }
         }
@@ -130,7 +119,6 @@ app.post('/submit-questionnaire', async (req, res) => {
         res.status(200).json({ message: 'Questionnaire submitted successfully!', data: insertedResponses });
 
     } catch (error) {
-        // Log l'erreur complète pour le débogage
         console.error('Error submitting individual questionnaire:', error);
         res.status(500).json({ message: 'Failed to submit questionnaire.', error: error.message });
     }
@@ -160,8 +148,7 @@ app.post('/import-aggregated-data', async (req, res) => {
     }
 });
 
-// --- ANALYTICS ENDPOINTS ---
-// (Ces endpoints interrogeront aussi la collection 'reponses')
+// --- ANALYTICS ENDPOINTS (EXISTANTS ET NOUVEAUX POUR LE DASHBOARD ADMIN) ---
 
 // GET endpoint to retrieve aggregated data for a specific survey question (e.g., radio buttons, text inputs)
 app.get('/analytics/survey/:questionId', async (req, res) => {
@@ -169,12 +156,12 @@ app.get('/analytics/survey/:questionId', async (req, res) => {
         const { questionId } = req.params;
 
         const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: questionId } }, // Filter by the specific question ID
+            { $match: { questionId: questionId } },
             { $group: {
-                _id: "$answer", // Group by the answer value (for simple answers like radio/text)
-                count: { $sum: 1 } // Count occurrences of each answer
+                _id: "$answer",
+                count: { $sum: 1 }
             }},
-            { $sort: { count: -1 } } // Sort by most frequent answers first
+            { $sort: { count: -1 } }
         ]);
 
         res.status(200).json(results);
@@ -195,7 +182,7 @@ app.get('/analytics/ranking/:questionId', async (req, res) => {
         }
 
         const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: questionId } }, // Filter for question 8
+            { $match: { questionId: questionId } },
             { $project: {
                 answers: { $objectToArray: "$answer" }
             }},
@@ -222,6 +209,99 @@ app.get('/analytics/ranking/:questionId', async (req, res) => {
     } catch (error) {
         console.error(`Error fetching analytics for ranking question ${req.params.questionId}:`, error);
         res.status(500).json({ message: 'Failed to retrieve ranking analytics.', error: error.message });
+    }
+});
+
+// NOUVELLE ROUTE : Obtenir le nombre total de soumissions
+app.get('/analytics/total-submissions', async (req, res) => {
+    try {
+        const count = await IndividualQuestionnaireResponse.countDocuments({});
+        res.status(200).json({ total: count });
+    } catch (error) {
+        console.error("Error fetching total submissions:", error);
+        res.status(500).json({ message: 'Failed to retrieve total submissions.', error: error.message });
+    }
+});
+
+// NOUVELLE ROUTE : Obtenir la répartition par sexe (Question 6 - ID 21398888)
+app.get('/analytics/gender-distribution', async (req, res) => {
+    try {
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: "21398888" } }, // Question 6: "6/ Êtes-vous ?"
+            { $group: {
+                _id: "$answer",
+                count: { $sum: 1 }
+            }},
+            { $sort: { count: -1 } }
+        ]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error("Error fetching gender distribution:", error);
+        res.status(500).json({ message: 'Failed to retrieve gender distribution.', error: error.message });
+    }
+});
+
+// NOUVELLE ROUTE : Obtenir la répartition par tranche d'âge (Question 4 - ID 21398886)
+app.get('/analytics/age-distribution', async (req, res) => {
+    try {
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: "21398886" } }, // Question 4: "4/ A quelle tranche d'âge appartenez-vous ?"
+            { $group: {
+                _id: "$answer",
+                count: { $sum: 1 }
+            }},
+            { $sort: { _id: 1 } } // Sort par ordre alphabétique ou numérique des tranches d'âge
+        ]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error("Error fetching age distribution:", error);
+        res.status(500).json({ message: 'Failed to retrieve age distribution.', error: error.message });
+    }
+});
+
+// NOUVELLE ROUTE : Obtenir la connaissance du développement durable (Question 7 - ID 21398889)
+app.get('/analytics/sustainability-knowledge', async (req, res) => {
+    try {
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: "21398889" } }, // Question 7: "7/ Connaissez-vous la notion de développement durable ?"
+            { $group: {
+                _id: "$answer",
+                count: { $sum: 1 }
+            }},
+            { $sort: { count: -1 } }
+        ]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error("Error fetching sustainability knowledge:", error);
+        res.status(500).json({ message: 'Failed to retrieve sustainability knowledge.', error: error.message });
+    }
+});
+
+// NOUVELLE ROUTE : Obtenir la moyenne des notes pour une question de type "Rating"
+app.get('/analytics/average-rating/:questionId', async (req, res) => {
+    try {
+        const { questionId } = req.params;
+
+        // Vérifier si la question est bien une question de notation (Rating 1-4)
+        // Pour cela, on peut soit avoir une liste d'IDs de questions de notation,
+        // soit s'assurer que la questionId est dans la plage attendue pour les ratings.
+        // Pour l'instant, on se base sur le fait que l'answer devrait être numérique.
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: questionId, answer: { $type: "number" } } }, // Match questionId et s'assurer que la réponse est un nombre
+            { $group: {
+                _id: null, // Group all documents to calculate a single average
+                average: { $avg: "$answer" } // Calculate the average of the 'answer' field
+            }}
+        ]);
+
+        if (results.length > 0) {
+            res.status(200).json({ questionId: questionId, averageRating: results[0].average });
+        } else {
+            res.status(404).json({ message: 'No numeric ratings found for this question ID.' });
+        }
+    } catch (error) {
+        console.error(`Error fetching average rating for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve average rating.', error: error.message });
     }
 });
 
