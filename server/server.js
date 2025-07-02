@@ -148,31 +148,136 @@ app.post('/import-aggregated-data', async (req, res) => {
     }
 });
 
-// --- ANALYTICS ENDPOINTS (EXISTANTS ET NOUVEAUX POUR LE DASHBOARD ADMIN) ---
+// --- ANALYTICS ENDPOINTS POUR LE DASHBOARD ADMIN ---
 
-// GET endpoint to retrieve aggregated data for a specific survey question (e.g., radio buttons, text inputs)
-app.get('/analytics/survey/:questionId', async (req, res) => {
+// GET : Obtenir le nombre total de soumissions
+app.get('/analytics/total-submissions', async (req, res) => {
+    try {
+        const count = await IndividualQuestionnaireResponse.countDocuments({});
+        res.status(200).json({ total: count });
+    } catch (error) {
+        console.error("Error fetching total submissions:", error);
+        res.status(500).json({ message: 'Failed to retrieve total submissions.', error: error.message });
+    }
+});
+
+// GET : Obtenir la répartition pour les questions à choix unique (radio buttons)
+// Fonctionne pour Q6, Q7, Q9, Q12, Q15, Q18, Q19
+app.get('/analytics/single-choice/:questionId', async (req, res) => {
     try {
         const { questionId } = req.params;
-
         const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: questionId } },
+            { $match: { questionId: questionId, answer: { $type: "string" } } }, // Match questionId et s'assurer que la réponse est une chaîne (option directe)
             { $group: {
                 _id: "$answer",
                 count: { $sum: 1 }
             }},
             { $sort: { count: -1 } }
         ]);
-
         res.status(200).json(results);
-    }
-    catch (error) {
-        console.error(`Error fetching analytics for survey question ${req.params.questionId}:`, error);
-        res.status(500).json({ message: 'Failed to retrieve survey analytics.', error: error.message });
+    } catch (error) {
+        console.error(`Error fetching single choice analytics for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve single choice analytics.', error: error.message });
     }
 });
 
-// GET endpoint to retrieve aggregated data for the ranking question (Question 8 - ID 21398890)
+// GET : Obtenir la répartition pour les questions à choix unique avec "Autre" texte (radio + text input)
+// Fonctionne pour Q1, Q2, Q5
+app.get('/analytics/single-choice-with-other/:questionId', async (req, res) => {
+    try {
+        const { questionId } = req.params;
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: questionId } },
+            { $project: {
+                // Si l'answer est un objet avec 'option'=='Autre', utiliser 'otherText', sinon utiliser 'answer'
+                effectiveAnswer: {
+                    $cond: {
+                        if: { $and: [
+                            { $eq: [ { $type: "$answer" }, "object" ] },
+                            { $eq: [ "$answer.option", "Autre" ] }
+                        ]},
+                        then: "$answer.otherText",
+                        else: "$answer"
+                    }
+                }
+            }},
+            // Filtrer les réponses nulles ou vides qui pourraient résulter d'une mauvaise saisie
+            { $match: { effectiveAnswer: { $ne: null, $ne: "" } } },
+            { $group: {
+                _id: "$effectiveAnswer",
+                count: { $sum: 1 }
+            }},
+            { $sort: { count: -1 } }
+        ]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(`Error fetching single choice with other analytics for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve single choice with other analytics.', error: error.message });
+    }
+});
+
+
+// GET : Obtenir la répartition pour les questions à choix multiples (checkboxes)
+// Fonctionne pour Q11, Q14, Q17
+app.get('/analytics/multi-select/:questionId', async (req, res) => {
+    try {
+        const { questionId } = req.params;
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: questionId, answer: { $type: "array" } } }, // Match questionId et s'assurer que la réponse est un tableau
+            { $unwind: "$answer" }, // Déconstruit le tableau 'answer' en documents séparés pour chaque option
+            { $group: {
+                _id: "$answer", // Groupe par chaque option sélectionnée
+                count: { $sum: 1 }
+            }},
+            { $sort: { count: -1 } }
+        ]);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(`Error fetching multi-select analytics for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve multi-select analytics.', error: error.message });
+    }
+});
+
+
+// GET : Obtenir la moyenne des notes pour les questions de type "Rating"
+// Fonctionne pour toutes les questions 10.x et 13.x, et Q16
+app.get('/analytics/average-rating/:questionId', async (req, res) => {
+    try {
+        const { questionId } = req.params;
+        const results = await IndividualQuestionnaireResponse.aggregate([
+            { $match: { questionId: questionId, answer: { $type: "number" } } }, // Match questionId et s'assurer que la réponse est un nombre
+            { $group: {
+                _id: null,
+                average: { $avg: "$answer" },
+                distribution: {
+                    $push: "$answer" // Pour obtenir la distribution des notes si nécessaire
+                }
+            }}
+        ]);
+
+        if (results.length > 0) {
+            // Calculer la distribution des notes (nombre de 1, 2, 3, 4)
+            const distribution = { '1': 0, '2': 0, '3': 0, '4': 0 };
+            results[0].distribution.forEach(score => {
+                if (score >= 1 && score <= 4) {
+                    distribution[score.toString()]++;
+                }
+            });
+            res.status(200).json({
+                questionId: questionId,
+                averageRating: results[0].average,
+                distribution: distribution
+            });
+        } else {
+            res.status(404).json({ message: 'No numeric ratings found for this question ID.' });
+        }
+    } catch (error) {
+        console.error(`Error fetching average rating for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve average rating.', error: error.message });
+    }
+});
+
+// GET : Obtenir les données pour la question de classement (Question 8 - ID 21398890)
 app.get('/analytics/ranking/:questionId', async (req, res) => {
     try {
         const { questionId } = req.params;
@@ -212,96 +317,23 @@ app.get('/analytics/ranking/:questionId', async (req, res) => {
     }
 });
 
-// NOUVELLE ROUTE : Obtenir le nombre total de soumissions
-app.get('/analytics/total-submissions', async (req, res) => {
-    try {
-        const count = await IndividualQuestionnaireResponse.countDocuments({});
-        res.status(200).json({ total: count });
-    } catch (error) {
-        console.error("Error fetching total submissions:", error);
-        res.status(500).json({ message: 'Failed to retrieve total submissions.', error: error.message });
-    }
-});
-
-// NOUVELLE ROUTE : Obtenir la répartition par sexe (Question 6 - ID 21398888)
-app.get('/analytics/gender-distribution', async (req, res) => {
-    try {
-        const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: "21398888" } }, // Question 6: "6/ Êtes-vous ?"
-            { $group: {
-                _id: "$answer",
-                count: { $sum: 1 }
-            }},
-            { $sort: { count: -1 } }
-        ]);
-        res.status(200).json(results);
-    } catch (error) {
-        console.error("Error fetching gender distribution:", error);
-        res.status(500).json({ message: 'Failed to retrieve gender distribution.', error: error.message });
-    }
-});
-
-// NOUVELLE ROUTE : Obtenir la répartition par tranche d'âge (Question 4 - ID 21398886)
-app.get('/analytics/age-distribution', async (req, res) => {
-    try {
-        const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: "21398886" } }, // Question 4: "4/ A quelle tranche d'âge appartenez-vous ?"
-            { $group: {
-                _id: "$answer",
-                count: { $sum: 1 }
-            }},
-            { $sort: { _id: 1 } } // Sort par ordre alphabétique ou numérique des tranches d'âge
-        ]);
-        res.status(200).json(results);
-    } catch (error) {
-        console.error("Error fetching age distribution:", error);
-        res.status(500).json({ message: 'Failed to retrieve age distribution.', error: error.message });
-    }
-});
-
-// NOUVELLE ROUTE : Obtenir la connaissance du développement durable (Question 7 - ID 21398889)
-app.get('/analytics/sustainability-knowledge', async (req, res) => {
-    try {
-        const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: "21398889" } }, // Question 7: "7/ Connaissez-vous la notion de développement durable ?"
-            { $group: {
-                _id: "$answer",
-                count: { $sum: 1 }
-            }},
-            { $sort: { count: -1 } }
-        ]);
-        res.status(200).json(results);
-    } catch (error) {
-        console.error("Error fetching sustainability knowledge:", error);
-        res.status(500).json({ message: 'Failed to retrieve sustainability knowledge.', error: error.message });
-    }
-});
-
-// NOUVELLE ROUTE : Obtenir la moyenne des notes pour une question de type "Rating"
-app.get('/analytics/average-rating/:questionId', async (req, res) => {
+// GET : Obtenir les réponses brutes pour les champs de texte (Email, Nom complet, Siret, Ville, Nom du cabinet)
+// Fonctionne pour 10000000 (Email), 10000001 (Nom complet), 21398881 (Nom cabinet), 21398882 (Siret), 21398885 (Ville)
+app.get('/analytics/raw-text-answers/:questionId', async (req, res) => {
     try {
         const { questionId } = req.params;
-
-        // Vérifier si la question est bien une question de notation (Rating 1-4)
-        // Pour cela, on peut soit avoir une liste d'IDs de questions de notation,
-        // soit s'assurer que la questionId est dans la plage attendue pour les ratings.
-        // Pour l'instant, on se base sur le fait que l'answer devrait être numérique.
         const results = await IndividualQuestionnaireResponse.aggregate([
-            { $match: { questionId: questionId, answer: { $type: "number" } } }, // Match questionId et s'assurer que la réponse est un nombre
+            { $match: { questionId: questionId, answer: { $type: "string" } } },
             { $group: {
-                _id: null, // Group all documents to calculate a single average
-                average: { $avg: "$answer" } // Calculate the average of the 'answer' field
-            }}
+                _id: "$answer", // Groupe par la réponse exacte
+                count: { $sum: 1 }
+            }},
+            { $sort: { count: -1 } } // Trie par les réponses les plus fréquentes
         ]);
-
-        if (results.length > 0) {
-            res.status(200).json({ questionId: questionId, averageRating: results[0].average });
-        } else {
-            res.status(404).json({ message: 'No numeric ratings found for this question ID.' });
-        }
+        res.status(200).json(results);
     } catch (error) {
-        console.error(`Error fetching average rating for question ${req.params.questionId}:`, error);
-        res.status(500).json({ message: 'Failed to retrieve average rating.', error: error.message });
+        console.error(`Error fetching raw text answers for question ${req.params.questionId}:`, error);
+        res.status(500).json({ message: 'Failed to retrieve raw text answers.', error: error.message });
     }
 });
 
